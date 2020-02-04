@@ -694,11 +694,11 @@
         /** 展示全部节点 */
         let nodesList1 = nodes.map(item => {
             if (item.status === 'abnormal') {
-                return `"${item.uid}" [id="${item.uid}" label="${item.name}&#10;(${item.location_type})&#10;${item.location_id}" shape="record" color="#ff2d51" fillcolor="#ff2d51"]`
+                return `"${item.uid}" [id="${item.uid}" label="${item.name}&#10;(${item.location_type})&#10;${item.location_id}" shape="record" color="#ff2d51" fillcolor="#ff2d51" children="${item.severity}"]`
             } else if (item.status === 'normal') {
-                return `"${item.uid}" [id="${item.uid}" label="${item.name}&#10;(${item.location_type})&#10;${item.location_id}" shape="record" color="#f0fcff" fillcolor="#70f3ff"]`
+                return `"${item.uid}" [id="${item.uid}" label="${item.name}&#10;(${item.location_type})&#10;${item.location_id}" shape="record" color="#f0fcff" fillcolor="#70f3ff" children="${item.severity}"]`
             } else {
-                return `"${item.uid}" [id="${item.uid}" label="${item.name}&#10;(${item.location_type})&#10;${item.location_id}" shape="record" color="#f0c239" fillcolor="#c2ccd0"]`
+                return `"${item.uid}" [id="${item.uid}" label="${item.name}&#10;(${item.location_type})&#10;${item.location_id}" shape="record" color="#f0c239" fillcolor="#c2ccd0" children="${item.severity}"]`
             }
         })
 
@@ -720,11 +720,11 @@
         })
         let nodesList = abnormalList.map(item => {
             if (item.status === 'abnormal') {
-                return `"${item.uid}" [id="${item.uid}" label="${item.name}&#10;(${item.location_type})" shape="record" color="#ff2d51" fillcolor="#ff2d51"]`
+                return `"${item.uid}" [id="${item.uid}" label="${item.name}&#10;(${item.location_type})" shape="record" color="#ff2d51" fillcolor="#ff2d51" children="${item.severity}"]`
             } else if (item.status === 'normal') {
-                return `"${item.uid}" [id="${item.uid}" label="${item.name}&#10;(${item.location_type})" shape="record" color="#f0fcff" fillcolor="#70f3ff"]`
+                return `"${item.uid}" [id="${item.uid}" label="${item.name}&#10;(${item.location_type})" shape="record" color="#f0fcff" fillcolor="#70f3ff" children="${item.severity}"]`
             } else {
-                return `"${item.uid}" [id="${item.uid}" label="${item.name}&#10;(${item.location_type})" shape="record" color="#f0c239" fillcolor="#f0c239"]`
+                return `"${item.uid}" [id="${item.uid}" label="${item.name}&#10;(${item.location_type})" shape="record" color="#f0c239" fillcolor="#f0c239" children="${item.severity}"]`
             }
         })
         let nodesContent = nodesList.join(' ')
@@ -737,7 +737,7 @@
                 }
             }
         }
-        console.log(arr, 'ara')
+        // console.log(arr, 'ara')
         let arr1 = []
         for (let i = 0; i < arr.length; i++) {
             for (let s = 0; s < abnormalList.length; s++) {
@@ -795,12 +795,12 @@ digraph {
             nodes = d3.selectAll('.node,.edge');
             nodes
                 .on("click", function () {
-                    // var title = d3.select(this).selectAll('title').text().trim();
-                    // var text = d3.select(this).selectAll('text').text();
+                    var title = d3.select(this).selectAll('title').text().trim();
+                    var text = d3.select(this).selectAll('text').text();
                     var id = d3.select(this).attr('id');
-                    // var class1 = d3.select(this).attr('class');
+                    var class1 = d3.select(this).attr('class');
                     // dotElement = title.replace('->', ' -> ');
-                    console.log(id, 'id')
+                    console.log('text', text)
                     // window.alert(`我是图表${id}`)
                     // console.log('Element id="%s" class="%s" title="%s" text="%s" dotElement="%s"', id, class1,
                     //     title, text, dotElement);
