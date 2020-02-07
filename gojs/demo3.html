@@ -1,0 +1,75 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo3</title>
+</head>
+
+<body>
+    <div id="demo" style="width:400px; height:150px; background-color: #DAE4E4;">
+
+    </div>
+    <script src="./js/go.js"></script>
+    <script>
+        let nodeDataArray = [
+            { key: "iscroll容器-1", name: "iscroll容器-1", compId: "111", color: "pink", cursor: "grab", loc: "0 0" },
+            { key: "iscroll容器-2", name: "iscroll容器-1", compId: "222", color: "pink", cursor: "grab", loc: "0 -100" },
+        ];
+        let relation = [
+            { from: "111", fromNodeType: "component", to: "222", toNodeType: "event" },
+        ];
+        let diagram = new go.Diagram('demo');
+        let $ = go.GraphObject.make;
+        diagram.nodeTemplate = $(go.Node, 'Auto',  //'Auto'：与css设置width:auto同样效果
+            {
+                // 添加点击事件
+                click: function (e, obj) {
+                    console.log(e, obj)
+                }
+            },
+            // 将节点数据nodeDataArray .loc与图表位置建立联系
+            // new go.Binding('position', 'loc', go.Point.parse),
+            //设置节点形状：带圆角的长方形
+            $(go.Shape, 'RoundedRectangle',
+                // 设置大小，边框大小、颜色，背景色，鼠标手势
+                { desiredSize: new go.Size(160, NaN), strokeWidth: 0, fill: 'white', cursor: 'grab' },
+                //将节点数据nodeDataArray .color与节点背景色建立联系
+                new go.Binding('fill', 'color'),
+                //将节点数据nodeDataArray .cursor与节点鼠标手势建立联系
+                new go.Binding('cursor', 'cursor')
+            ),
+            // 设置文本节点
+            $(go.TextBlock,
+                // 设置文本样式：大小，是否换行，margin
+                {
+                    desiredSize: new go.Size(100, NaN),
+                    wrap: go.TextBlock.WrapFit,
+                    margin: 8
+                },
+                // bind TextBlock.text to Node.data.name
+                new go.Binding('text', 'name'),
+                new go.Binding('cursor', 'cursor')
+            )
+        );
+        
+        // this.diagram.linkTemplate = $(go.Link,
+        //     $(go.Shape, // the link shape
+        //         { strokeWidth: 2, stroke: 'white' }),
+        //     $(go.Shape, // the arrowhead
+        //         {
+        //             toArrow: 'OpenTriangle',
+        //             fill: null, stroke: 'white'
+        //         })
+        // );
+        // 将图表在画布中居中显示
+        // this.diagram.initialContentAlignment = go.Spot.Center;
+        // // 操作支持ctrl+z、ctrl+Y 实现undo和redo
+        // this.diagram.undoManager.isEnabled = true;
+        // // 通过节点数据和关系数组完成关系图。
+        // this.diagram.model = new go.GraphLinksModel(nodeDataArray, relation); //nodeDataArray:graph, linkDataArray: relation
+    </script>
+</body>
+
+</html>

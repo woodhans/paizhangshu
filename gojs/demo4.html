@@ -1,0 +1,60 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo3</title>
+</head>
+
+<body>
+    <div id="demo" style="width:400px; height:450px; background-color: #DAE4E4;">
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gojs/1.8.13/go-debug.js"></script>
+    <script>
+        var $ = go.GraphObject.make;
+        var myDiagram =
+            $(go.Diagram, "demo",
+                {
+                    initialContentAlignment: go.Spot.Center, // 居中显示Diagram内容
+                    "undoManager.isEnabled": true // 打开Ctrl-Z撤销和Ctrl-Y重做功能
+                });
+
+        var myModel = $(go.Model);
+        // 在model的数据中, 每个节点数据的值都是由一个JS对象来表示:
+        myModel.nodeDataArray = [
+            { key: "Alpha" },
+            { key: "Beta" },
+            { key: "Gamma" }
+        ];
+        myDiagram.model = myModel;
+        myDiagram.nodeTemplate =
+            $(go.Node, "Vertical", // 第2个参数是Panel的类型。（译者注：比如横向排列还是纵向排列）
+                /* Node参数配置 */
+                { // Node.location 定位的基准点设置在每个节点的中心处
+                    locationSpot: go.Spot.Center
+                },
+
+                /* 这里添加数据绑定 */
+                // 例如 Node.location的参数值绑在 Node.data.loc
+                new go.Binding("location", "loc"),
+
+                /* 在节点中添加 GraphObjects */
+                // 这个Shape将垂直放在TextBlock上
+                $(go.Shape,
+                    "RoundedRectangle", // 这个参数可以指定一个预定义的图形（圆角矩形）。
+                    { /* 为Shape设置配置项 */ },
+                    // 例如Shape的Shape.figure参数值绑定在Node.data.fig
+                    new go.Binding("figure", "fig")),
+
+                $(go.TextBlock,
+                    "default text",  // 这个参数初始化了一个默认的文本
+                    { /* 配置TextBlock */ },
+                    // 例如 TextBlock.text参数的值绑定在Node.data.key
+                    new go.Binding("text", "key"))
+            );
+    </script>
+</body>
+
+</html>
